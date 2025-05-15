@@ -9,6 +9,7 @@ public class Usuario {
     private String contraseña;
     private Double montoInicial;
     private String nombreUsuario;
+    private String genero;
 
     public Usuario(String nombre, String apellido, Integer edad, Long documento, String contraseña, String nombreUsuario, Double montoInicial) {
         this.nombre = nombre;
