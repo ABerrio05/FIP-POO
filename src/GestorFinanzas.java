@@ -11,7 +11,6 @@ public class GestorFinanzas {
         this.usuario = usuario;
     }
 
-    // Método para agregar cualquier tipo de finanza
     public void agregarFinanza(Finanzas finanza) {
         finanzas.add(finanza);
     }
@@ -35,7 +34,7 @@ public class GestorFinanzas {
         finanzas.stream().filter(f -> f.getTipo().equals("Gasto")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Gasto)f).getMonto()).append("\n"));
 
         reporte.append("\nAhorros:\n");
-        finanzas.stream().filter(f -> f.getTipo().equals("Ahorro")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Ahorro)f).getMontoActual()).append("/$").append(((Ahorro)f).getMeta()).append("\n"));
+        finanzas.stream().filter(f -> f.getTipo().equals("Ahorro")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Ahorro)f).getMonto()).append("\n"));
 
         return reporte.toString();
     }
@@ -44,24 +43,18 @@ public class GestorFinanzas {
     public double calcularBalance() {
         double balance = usuario.getMontoInicial();
 
-        balance += finanzas.stream()
-                .filter(f -> f.getTipo().equals("Ingreso"))
-                .mapToDouble(f -> ((Ingreso)f).getMonto())
-                .sum();
+        balance += finanzas.stream().filter(f -> f.getTipo().equals("Ingreso")).mapToDouble(f -> ((Ingreso)f).getMonto()).sum();
 
-        balance -= finanzas.stream()
-                .filter(f -> f.getTipo().equals("Gasto"))
-                .mapToDouble(f -> ((Gasto)f).getMonto())
-                .sum();
+        balance -= finanzas.stream().filter(f -> f.getTipo().equals("Gasto")).mapToDouble(f -> ((Gasto)f).getMonto()).sum();
+
+        balance -= finanzas.stream().filter(f -> f.getTipo().equals("Ahorro")).mapToDouble(f -> ((Ahorro)f).getMonto()).sum();
 
         return balance;
     }
 
     // Reporte por categoría
     public String generarReportePorCategoria(String categoria) {
-        List<Finanzas> filtradas = finanzas.stream()
-                .filter(f -> f.getCategoria().equalsIgnoreCase(categoria))
-                .collect(Collectors.toList());
+        List<Finanzas> filtradas = finanzas.stream().filter(f -> f.getCategoria().equalsIgnoreCase(categoria)).collect(Collectors.toList());
 
         if (filtradas.isEmpty()) {
             return "No hay transacciones en la categoría " + categoria;
@@ -77,7 +70,7 @@ public class GestorFinanzas {
             } else if (f instanceof Gasto) {
                 reporte.append("-$").append(((Gasto)f).getMonto());
             } else {
-                reporte.append("Ahorro: $").append(((Ahorro)f).getMontoActual());
+                reporte.append("Ahorro: $").append(((Ahorro)f).getMonto());
             }
             reporte.append("\n");
         });
@@ -87,15 +80,10 @@ public class GestorFinanzas {
 
     // Métodos adicionales
     public List<Finanzas> getFinanzasPorTipo(String tipo) {
-        return finanzas.stream()
-                .filter(f -> f.getTipo().equalsIgnoreCase(tipo))
-                .collect(Collectors.toList());
+        return finanzas.stream().filter(f -> f.getTipo().equalsIgnoreCase(tipo)).collect(Collectors.toList());
     }
 
     public double getTotalAhorros() {
-        return finanzas.stream()
-                .filter(f -> f.getTipo().equals("Ahorro"))
-                .mapToDouble(f -> ((Ahorro)f).getMontoActual())
-                .sum();
+        return finanzas.stream().filter(f -> f.getTipo().equals("Ahorro")).mapToDouble(f -> ((Ahorro)f).getMonto()).sum();
     }
 }

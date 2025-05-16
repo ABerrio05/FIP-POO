@@ -7,13 +7,13 @@ public class FIP {
 
     public static void main(String[] args) {
         boolean salir = false;
-
+        System.out.println("*** Bienvenido a FIP ***");
         while (!salir) {
-            System.out.println("""
-                *** Bienvenido a FIP ***
+            System.out.print("""
                 1. Ingresar usuario registrado
                 2. Registrar nuevo usuario
                 3. Salir
+                Seleccione una opcion:
                 """);
 
             int opcion = Integer.parseInt(teclado.nextLine().trim());
@@ -35,10 +35,7 @@ public class FIP {
 
         if (gestorUsuario.iniciarSesion(usuario, contraseña)) {
             Usuario usuarioActual = gestorUsuario.getUsuarioActual();
-            GestorFinanzas gestorFinanzas = gestoresFinanzas.computeIfAbsent(
-                    usuarioActual,
-                    k -> new GestorFinanzas(usuarioActual)
-            );
+            GestorFinanzas gestorFinanzas = gestoresFinanzas.computeIfAbsent(usuarioActual,k -> new GestorFinanzas(usuarioActual));
             menuFinanzas(gestorFinanzas);
         } else {
             System.out.println("Usuario o contraseña incorrectos.");
@@ -62,15 +59,15 @@ public class FIP {
         String confirmarContraseña = teclado.nextLine().trim();
         if (!contraseña.equals(confirmarContraseña)) {
             System.out.println(" Las contraseñas no coinciden.");
-        }
-        System.out.println("Ingrese un monto inicial");
-        Double montoInicial = Double.parseDouble(teclado.nextLine().trim());
+        }else{
+            System.out.println("Ingrese un monto inicial");
+            Double montoInicial = Double.parseDouble(teclado.nextLine().trim());
 
-    // Después de crear el usuario:
-        Usuario nuevoUsuario = new Usuario(nombre, apellido, edad, documento, contraseña, nombreUsuario, montoInicial);
-        if (gestorUsuario.agregarUsuario(nuevoUsuario)) {
-            gestoresFinanzas.put(nuevoUsuario, new GestorFinanzas(nuevoUsuario));
-            System.out.println("Usuario registrado exitosamente.");
+            // Después de crear el usuario:
+            Usuario nuevoUsuario = new Usuario(nombre, apellido, edad, documento, contraseña, nombreUsuario, montoInicial);
+            if (gestorUsuario.agregarUsuario(nuevoUsuario)) {gestoresFinanzas.put(nuevoUsuario, new GestorFinanzas(nuevoUsuario));
+                System.out.println("Usuario registrado exitosamente.");
+            }
         }
     }
 
@@ -78,7 +75,7 @@ public class FIP {
         boolean volver = false;
 
         while (!volver) {
-            System.out.println("""
+            System.out.print("""
                 *** MENÚ FINANZAS ***
                 1. Agregar ingreso
                 2. Agregar gasto
@@ -87,6 +84,7 @@ public class FIP {
                 5. Generar reporte por categoría
                 6. Ver balance actual
                 7. Volver
+                Seleccione una opcion:
                 """);
 
             int opcion = Integer.parseInt(teclado.nextLine().trim());
@@ -101,7 +99,7 @@ public class FIP {
                     String categoria = teclado.nextLine();
                     System.out.println(gestor.generarReportePorCategoria(categoria));
                 }
-                case 6 -> System.out.println("Balance actual: $" + gestor.calcularBalance());
+                case 6 -> System.out.println("Balance actual: " + gestor.calcularBalance());
                 case 7 -> volver = true;
                 default -> System.out.println("Opción inválida.");
             }
@@ -109,32 +107,28 @@ public class FIP {
     }
 
     private static void agregarIngreso(GestorFinanzas gestor) {
-        System.out.println("Tipo de ingreso:\n1. Ahorro\n2. Categoría\n3. Cuenta");
-        int tipo = Integer.parseInt(teclado.nextLine().trim());
+//        System.out.println("Tipo de ingreso:\n1. Ahorro\n2. Categoría\n3. Cuenta");
+//        int tipo = Integer.parseInt(teclado.nextLine().trim());
 
-        System.out.println("Detalles:");
-        String detalles = teclado.nextLine();
-        System.out.println("Categoría:");
-        String categoria = teclado.nextLine();
-        System.out.println("Monto:");
+        System.out.println("Ingrese el monto de ingreso:");
         double monto = Double.parseDouble(teclado.nextLine());
-        System.out.println("Fuente:");
-        String fuente = teclado.nextLine();
-        System.out.println("Ingrese Metodo de pago");
-        String metodoPago = teclado.nextLine();
+        System.out.println("Ingrese detalles del ingreso:");
+        String detalles = teclado.nextLine();
+        System.out.println("Ingrese la categoría donde quiere ingresar el ingreso:");
+        String categoria = teclado.nextLine();
 
-        Ingreso ingreso = new Ingreso(detalles, categoria, monto, fuente,metodoPago);
+        Ingreso ingreso = new Ingreso(detalles, categoria, monto);
         gestor.agregarFinanza(ingreso);
         System.out.println("Ingreso registrado.");
     }
 
     private static void agregarGasto(GestorFinanzas gestor) {
-        System.out.println("Detalles:");
-        String detalles = teclado.nextLine();
-        System.out.println("Categoría:");
-        String categoria = teclado.nextLine();
-        System.out.println("Monto:");
+        System.out.println("Ingrese el monto del gasto:");
         double monto = Double.parseDouble(teclado.nextLine());
+        System.out.println("Ingrese detalles del gasto:");
+        String detalles = teclado.nextLine();
+        System.out.println("Ingrese la categoría donde quiere ingresar el gasto:");
+        String categoria = teclado.nextLine();
         System.out.println("Ingrese Metodo de pago");
         String metodoPago = teclado.nextLine();
 
@@ -145,16 +139,16 @@ public class FIP {
     }
 
     private static void agregarAhorro(GestorFinanzas gestor) {
-        System.out.println("Detalles:");
-        String detalles = teclado.nextLine();
-        System.out.println("Categoría:");
-        String categoria = teclado.nextLine();
-        System.out.println("Monto:");
+        System.out.println("Ingrese el monto del ahorro:");
         double monto = Double.parseDouble(teclado.nextLine());
-        System.out.println("Meta");
-        double meta = Double.parseDouble(teclado.nextLine());
+        System.out.println("Ingrese detalles del ahorro:");
+        String detalles = teclado.nextLine();
+        System.out.println("Ingrese la categoría donde quiere ingresar el ahorro :");
+        String categoria = teclado.nextLine();
+//        System.out.println("Meta");
+//        double meta = Double.parseDouble(teclado.nextLine());
 
-        Ahorro ahorro = new Ahorro(detalles,categoria,monto,meta);
+        Ahorro ahorro = new Ahorro(detalles,categoria,monto);
         gestor.agregarAhorro(ahorro);
         System.out.println("Ahorro registrado.");
     }

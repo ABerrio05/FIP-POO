@@ -1,15 +1,13 @@
 public class Ingreso extends Finanzas {
 
     private double monto;
-    private String fuente;
-    private String frecuencia; //mensual, unico , semanal
-    private String metodoPago;
+//    private String fuente;
+//    private String frecuencia; mensual, unico , semanal
+//    private String metodoPago;
 
-    public Ingreso(String detalles,String categoria,double monto,String fuente, String metodoPago){
+    public Ingreso(String detalles,String categoria,double monto){
         super(detalles, categoria);
         this.monto=monto;
-        this.fuente=fuente;
-        this.metodoPago=metodoPago;
     }
 
 //    public String mostrarResumen() {
@@ -19,7 +17,7 @@ public class Ingreso extends Finanzas {
 //                "Fuente: " + fuente + "\n" +
 //                "Forma de pago: " + metodoPago + "\n" +
 //                "Frecuencia: " + frecuencia + "\n";
-////                "Notas: " + notas;
+//                "Notas: " + notas;
 //    }
 
     @Override
@@ -37,28 +35,22 @@ public class Ingreso extends Finanzas {
         this.monto = monto;
     }
 
-    public String getFuente() {
-        return fuente;
-    }
+//    public String getFuente() {
+//        return fuente;
+//    }
+//
+//    public void setFuente(String fuente) {
+//        this.fuente = fuente;
+//    }
 
-    public void setFuente(String fuente) {
-        this.fuente = fuente;
-    }
+//    public String getFrecuencia() {
+//        return frecuencia;
+//    }
 
-    public String getFrecuencia() {
-        return frecuencia;
-    }
 
-    public String getMetodoPago() {
-        return metodoPago;
-    }
-
-    public void setMetodoPago(String metodoPago) {
-        this.metodoPago = metodoPago;
-    }
-    public void setFrecuencia(String frecuencia) {
-        this.frecuencia = frecuencia;
-    }
+//    public void setFrecuencia(String frecuencia) {
+//        this.frecuencia = frecuencia;
+//    }
 
 
 }
