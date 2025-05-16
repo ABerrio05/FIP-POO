@@ -15,7 +15,12 @@ public class GestorFinanzas {
     public void agregarFinanza(Finanzas finanza) {
         finanzas.add(finanza);
     }
-
+    public void agregarGasto(Finanzas finanza) {
+        finanzas.add(finanza);
+    }
+    public void agregarAhorro(Finanzas finanza) {
+        finanzas.add(finanza);
+    }
     // Generar reporte general
     public String generarReporteGeneral() {
         StringBuilder reporte = new StringBuilder();
@@ -24,19 +29,13 @@ public class GestorFinanzas {
         reporte.append("Balance total: $").append(calcularBalance()).append("\n\n");
 
         reporte.append("Ingresos:\n");
-        finanzas.stream()
-                .filter(f -> f.getTipo().equals("Ingreso"))
-                .forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Ingreso)f).getMonto()).append("\n"));
+        finanzas.stream().filter(f -> f.getTipo().equals("Ingreso")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Ingreso)f).getMonto()).append("\n"));
 
         reporte.append("\nGastos:\n");
-        finanzas.stream()
-                .filter(f -> f.getTipo().equals("Gasto"))
-                .forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Gasto)f).getCantidadPago()).append("\n"));
+        finanzas.stream().filter(f -> f.getTipo().equals("Gasto")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Gasto)f).getMonto()).append("\n"));
 
         reporte.append("\nAhorros:\n");
-        finanzas.stream()
-                .filter(f -> f.getTipo().equals("Ahorro"))
-                .forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Ahorro)f).getMontoActual()).append("/$").append(((Ahorro)f).getMeta()).append("\n"));
+        finanzas.stream().filter(f -> f.getTipo().equals("Ahorro")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Ahorro)f).getMontoActual()).append("/$").append(((Ahorro)f).getMeta()).append("\n"));
 
         return reporte.toString();
     }
@@ -52,7 +51,7 @@ public class GestorFinanzas {
 
         balance -= finanzas.stream()
                 .filter(f -> f.getTipo().equals("Gasto"))
-                .mapToDouble(f -> ((Gasto)f).getCantidadPago())
+                .mapToDouble(f -> ((Gasto)f).getMonto())
                 .sum();
 
         return balance;
@@ -76,7 +75,7 @@ public class GestorFinanzas {
             if (f instanceof Ingreso) {
                 reporte.append("+$").append(((Ingreso)f).getMonto());
             } else if (f instanceof Gasto) {
-                reporte.append("-$").append(((Gasto)f).getCantidadPago());
+                reporte.append("-$").append(((Gasto)f).getMonto());
             } else {
                 reporte.append("Ahorro: $").append(((Ahorro)f).getMontoActual());
             }

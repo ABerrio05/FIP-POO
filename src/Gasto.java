@@ -2,12 +2,12 @@
 public class Gasto extends Finanzas {
 
     private String metodoPago;
-    private Double cantidadPago;
+    private Double monto;
 
-    public Gasto(String detalles, String categoria, String metodoPago, Double cantidadPago) {
+    public Gasto(String detalles, String categoria, Double monto, String metodoPago) {
         super(detalles, categoria);
         this.metodoPago = metodoPago;
-        this.cantidadPago = cantidadPago;
+        this.monto = monto;
     }
     public Gasto (){
 
@@ -15,7 +15,7 @@ public class Gasto extends Finanzas {
 
     @Override
     public String getTipo(){
-        return " gasto ";
+        return "Gasto";
     }
 
     public String getMetodoPago() {
@@ -26,12 +26,12 @@ public class Gasto extends Finanzas {
         this.metodoPago = metodoPago;
     }
 
-    public Double getCantidadPago() {
-        return cantidadPago;
+    public Double getMonto() {
+        return monto;
     }
 
-    public void setCantidadPago(Double cantidadPago) {
-        this.cantidadPago = cantidadPago;
+    public void setMonto(Double monto) {
+        this.monto = monto;
     }
 
 }

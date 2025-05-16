@@ -3,23 +3,24 @@ public class Ingreso extends Finanzas {
     private double monto;
     private String fuente;
     private String frecuencia; //mensual, unico , semanal
-    private String formaPago;
+    private String metodoPago;
 
-    public Ingreso(String detalles,String categoria,double monto,String fuente){
+    public Ingreso(String detalles,String categoria,double monto,String fuente, String metodoPago){
         super(detalles, categoria);
         this.monto=monto;
         this.fuente=fuente;
+        this.metodoPago=metodoPago;
     }
 
-    public String mostrarResumen() {
-        return "Ingreso: " + getDetalles() + "\n" +
-                "Categoría: " + getCategoria() + "\n" +
-                "Monto: " + monto + "\n" +
-                "Fuente: " + fuente + "\n" +
-                "Forma de pago: " + formaPago + "\n" +
-                "Frecuencia: " + frecuencia + "\n";
-//                "Notas: " + notas;
-    }
+//    public String mostrarResumen() {
+//        return "Ingreso: " + getDetalles() + "\n" +
+//                "Categoría: " + getCategoria() + "\n" +
+//                "Monto: " + monto + "\n" +
+//                "Fuente: " + fuente + "\n" +
+//                "Forma de pago: " + metodoPago + "\n" +
+//                "Frecuencia: " + frecuencia + "\n";
+////                "Notas: " + notas;
+//    }
 
     @Override
     public String getTipo(){
@@ -48,12 +49,12 @@ public class Ingreso extends Finanzas {
         return frecuencia;
     }
 
-    public String getFormaPago() {
-        return formaPago;
+    public String getMetodoPago() {
+        return metodoPago;
     }
 
-    public void setFormaPago(String formaPago) {
-        this.formaPago = formaPago;
+    public void setMetodoPago(String metodoPago) {
+        this.metodoPago = metodoPago;
     }
     public void setFrecuencia(String frecuencia) {
         this.frecuencia = frecuencia;

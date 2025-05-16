@@ -13,6 +13,7 @@ public class Ahorro extends Finanzas {
     public String getTipo() {
         return "Ahorro";
     }
+
     public double getMontoActual() {
         return montoActual;
     }

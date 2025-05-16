@@ -41,12 +41,11 @@ public class FIP {
             );
             menuFinanzas(gestorFinanzas);
         } else {
-            System.out.println("❌ Usuario o contraseña incorrectos.");
+            System.out.println("Usuario o contraseña incorrectos.");
         }
     }
 
     private static void registrarUsuario() {
-        // ... (código existente de registro)
         System.out.println("Ingrese su nombre");
         String nombre = teclado.nextLine().toLowerCase().trim();
         System.out.println("Ingrese su apellido");
@@ -121,17 +120,42 @@ public class FIP {
         double monto = Double.parseDouble(teclado.nextLine());
         System.out.println("Fuente:");
         String fuente = teclado.nextLine();
+        System.out.println("Ingrese Metodo de pago");
+        String metodoPago = teclado.nextLine();
 
-        Ingreso ingreso = new Ingreso(detalles, categoria, monto, fuente);
+        Ingreso ingreso = new Ingreso(detalles, categoria, monto, fuente,metodoPago);
         gestor.agregarFinanza(ingreso);
-        System.out.println("✅ Ingreso registrado.");
+        System.out.println("Ingreso registrado.");
     }
 
     private static void agregarGasto(GestorFinanzas gestor) {
-        // Similar a agregarIngreso pero para gastos
+        System.out.println("Detalles:");
+        String detalles = teclado.nextLine();
+        System.out.println("Categoría:");
+        String categoria = teclado.nextLine();
+        System.out.println("Monto:");
+        double monto = Double.parseDouble(teclado.nextLine());
+        System.out.println("Ingrese Metodo de pago");
+        String metodoPago = teclado.nextLine();
+
+        Gasto gasto = new Gasto(detalles,categoria,monto,metodoPago);
+        gestor.agregarGasto(gasto);
+        System.out.println("Gasto registrado.");
+
     }
 
     private static void agregarAhorro(GestorFinanzas gestor) {
-        // Similar a agregarIngreso pero para ahorros
+        System.out.println("Detalles:");
+        String detalles = teclado.nextLine();
+        System.out.println("Categoría:");
+        String categoria = teclado.nextLine();
+        System.out.println("Monto:");
+        double monto = Double.parseDouble(teclado.nextLine());
+        System.out.println("Meta");
+        double meta = Double.parseDouble(teclado.nextLine());
+
+        Ahorro ahorro = new Ahorro(detalles,categoria,monto,meta);
+        gestor.agregarAhorro(ahorro);
+        System.out.println("Ahorro registrado.");
     }
 }
