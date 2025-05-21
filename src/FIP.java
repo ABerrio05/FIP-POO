@@ -10,13 +10,13 @@ public class FIP {
         System.out.println("*** Bienvenido a FIP ***");
         while (!salir) {
             System.out.print("""
-                1. Ingresar usuario registrado
+                1. Ingresar usuario
                 2. Registrar nuevo usuario
                 3. Salir
                 Seleccione una opcion:
                 """);
 
-            int opcion = Integer.parseInt(teclado.nextLine().trim());
+            int opcion = Normalizar.normalizarInt(teclado);
 
             switch (opcion) {
                 case 1 -> iniciarSesion();
@@ -48,25 +48,29 @@ public class FIP {
         System.out.println("Ingrese su apellido");
         String apellido = teclado.nextLine().toLowerCase().trim();
         System.out.println("Ingrese su edad");
-        int edad = Integer.parseInt(teclado.nextLine().trim());
-        System.out.println("Ingrese su numero de documento");
-        long documento = Long.parseLong(teclado.nextLine().trim());
-        System.out.println("Ingrese nombre de usuario");
-        String nombreUsuario = teclado.nextLine().trim();
-        System.out.println("Ingrese una contraseña");
-        String contraseña = teclado.nextLine().trim();
-        System.out.println("Ingrese la contraseña nuevamente para confirmar");
-        String confirmarContraseña = teclado.nextLine().trim();
-        if (!contraseña.equals(confirmarContraseña)) {
-            System.out.println(" Las contraseñas no coinciden.");
-        }else{
-            System.out.println("Ingrese un monto inicial");
-            Double montoInicial = Double.parseDouble(teclado.nextLine().trim());
+        int edad = Normalizar.normalizarInt(teclado);
+        if (edad < 17 || edad > 100){
+            System.out.println("Usted debe tener entre 17 o 100 años para poder utilizar la aplicacion.");
+        }else {
+            System.out.println("Ingrese su numero de documento");
+            long documento = Normalizar.normalizarLong(teclado);
+            System.out.println("Ingrese nombre de usuario");
+            String nombreUsuario = teclado.nextLine().trim();
+            System.out.println("Ingrese una contraseña");
+            String contraseña = teclado.nextLine().trim();
+            System.out.println("Ingrese la contraseña nuevamente para confirmar");
+            String confirmarContraseña = teclado.nextLine().trim();
+            if (!contraseña.equals(confirmarContraseña)) {
+                System.out.println("Las contraseñas no coinciden.");
+            }else{
+                System.out.println("Ingrese un monto inicial");
+                Double montoInicial = Normalizar.normalizarDouble(teclado);
 
-            // Después de crear el usuario:
-            Usuario nuevoUsuario = new Usuario(nombre, apellido, edad, documento, contraseña, nombreUsuario, montoInicial);
-            if (gestorUsuario.agregarUsuario(nuevoUsuario)) {gestoresFinanzas.put(nuevoUsuario, new GestorFinanzas(nuevoUsuario));
-                System.out.println("Usuario registrado exitosamente.");
+                // Después de crear el usuario:
+                Usuario nuevoUsuario = new Usuario(nombre, apellido, edad, documento, contraseña, nombreUsuario, montoInicial);
+                if (gestorUsuario.agregarUsuario(nuevoUsuario)) {gestoresFinanzas.put(nuevoUsuario, new GestorFinanzas(nuevoUsuario));
+                    System.out.println("Usuario registrado exitosamente.");
+                }
             }
         }
     }
@@ -80,38 +84,69 @@ public class FIP {
                 1. Agregar ingreso
                 2. Agregar gasto
                 3. Agregar ahorro
-                4. Generar reporte general
-                5. Generar reporte por categoría
-                6. Ver balance actual
-                7. Volver
+                4. Editar ahorro existente
+                5. Eliminar ahorro
+                6. Generar reporte general
+                7. Generar reporte por categoría
+                8. Ver balance actual
+                9. Generar grafica gastos por categoria
+                10. Generar grafica ingresos por categoria
+                11. Generar grafica ahorros por categoria
+                12. Volver
                 Seleccione una opcion:
                 """);
 
-            int opcion = Integer.parseInt(teclado.nextLine().trim());
+            int opcion = Normalizar.normalizarInt(teclado);
 
             switch (opcion) {
                 case 1 -> agregarIngreso(gestor);
                 case 2 -> agregarGasto(gestor);
                 case 3 -> agregarAhorro(gestor);
-                case 4 -> System.out.println(gestor.generarReporteGeneral());
-                case 5 -> {
+                case 4 -> modificarAhorro(gestor);
+                case 5 -> eliminarAhorro(gestor);
+                case 6 -> System.out.println(gestor.generarReporteGeneral());
+                case 7 -> {
                     System.out.println("Ingrese categoría:");
                     String categoria = teclado.nextLine();
                     System.out.println(gestor.generarReportePorCategoria(categoria));
                 }
-                case 6 -> System.out.println("Balance actual: " + gestor.calcularBalance());
-                case 7 -> volver = true;
+                case 8 -> System.out.println("Balance actual: " + gestor.calcularBalance());
+                case 9 -> {
+                    List<Gasto> gastos = gestor.getGastos(); // usa el método que tengas para obtener los gastos
+                    if (!gastos.isEmpty()) {
+                        GraficoGastos grafica = new GraficoGastos(gastos);
+                        grafica.setVisible(true);
+                    } else {
+                        System.out.println("No hay gastos registrados para mostrar en la gráfica.");
+                    }
+                }
+                case 10 -> {
+                    List<Ingreso> ingresos = gestor.getIngresos(); // usa el método que tengas para obtener los gastos
+                    if (!ingresos.isEmpty()) {
+                        GraficoIngresos grafica = new GraficoIngresos(ingresos);
+                        grafica.setVisible(true);
+                    } else {
+                        System.out.println("No hay ingresos registrados para mostrar en la gráfica.");
+                    }
+                }
+                case 11 -> {
+                    List<Ahorro> ahorros = gestor.getAhorros(); // usa el método que tengas para obtener los gastos
+                    if (!ahorros.isEmpty()) {
+                        GraficoAhorros grafica = new GraficoAhorros(ahorros);
+                        grafica.setVisible(true);
+                    } else {
+                        System.out.println("No hay ahorros registrados para mostrar en la gráfica.");
+                    }
+                }
+                case 12 -> volver = true;
                 default -> System.out.println("Opción inválida.");
             }
         }
     }
 
     private static void agregarIngreso(GestorFinanzas gestor) {
-//        System.out.println("Tipo de ingreso:\n1. Ahorro\n2. Categoría\n3. Cuenta");
-//        int tipo = Integer.parseInt(teclado.nextLine().trim());
-
         System.out.println("Ingrese el monto de ingreso:");
-        double monto = Double.parseDouble(teclado.nextLine());
+        double monto = Normalizar.normalizarDouble(teclado);
         System.out.println("Ingrese detalles del ingreso:");
         String detalles = teclado.nextLine();
         System.out.println("Ingrese la categoría donde quiere ingresar el ingreso:");
@@ -124,32 +159,129 @@ public class FIP {
 
     private static void agregarGasto(GestorFinanzas gestor) {
         System.out.println("Ingrese el monto del gasto:");
-        double monto = Double.parseDouble(teclado.nextLine());
-        System.out.println("Ingrese detalles del gasto:");
-        String detalles = teclado.nextLine();
-        System.out.println("Ingrese la categoría donde quiere ingresar el gasto:");
-        String categoria = teclado.nextLine();
-        System.out.println("Ingrese Metodo de pago");
-        String metodoPago = teclado.nextLine();
+        double monto = Normalizar.normalizarDouble(teclado);
+        if (monto > gestor.calcularBalance()){
+            System.out.println("Error, fondos insuficientes, el saldo actual es de: " + gestor.calcularBalance());
+        }else {
 
-        Gasto gasto = new Gasto(detalles,categoria,monto,metodoPago);
-        gestor.agregarGasto(gasto);
-        System.out.println("Gasto registrado.");
+            System.out.println("Ingrese detalles del gasto:");
+            String detalles = teclado.nextLine();
+            System.out.println("Ingrese la categoría donde quiere ingresar el gasto:");
+            String categoria = teclado.nextLine();
 
+            Gasto gasto = new Gasto(detalles,categoria,monto);
+            gestor.agregarGasto(gasto);
+            System.out.println("Gasto registrado.");
+        }
     }
 
     private static void agregarAhorro(GestorFinanzas gestor) {
         System.out.println("Ingrese el monto del ahorro:");
-        double monto = Double.parseDouble(teclado.nextLine());
-        System.out.println("Ingrese detalles del ahorro:");
-        String detalles = teclado.nextLine();
-        System.out.println("Ingrese la categoría donde quiere ingresar el ahorro :");
-        String categoria = teclado.nextLine();
-//        System.out.println("Meta");
-//        double meta = Double.parseDouble(teclado.nextLine());
+        double monto = Normalizar.normalizarDouble(teclado);
+        if (monto > gestor.calcularBalance()){
+            System.out.println("Error, fondos insuficientes, el saldo actual es de: " + gestor.calcularBalance());
+        }else {
+            System.out.println("Ingrese detalles del ahorro:");
+            String detalles = teclado.nextLine();
+            System.out.println("Ingrese la categoría donde quiere ingresar el ahorro :");
+            String categoria = teclado.nextLine();
 
-        Ahorro ahorro = new Ahorro(detalles,categoria,monto);
-        gestor.agregarAhorro(ahorro);
-        System.out.println("Ahorro registrado.");
+            Ahorro ahorro = new Ahorro(detalles, categoria, monto);
+            gestor.agregarAhorro(ahorro);
+            System.out.println("Ahorro registrado.");
+        }
     }
+
+    private static void modificarAhorro (GestorFinanzas gestor){
+        List<Ahorro> ahorros = gestor.getAhorros();
+
+        if (ahorros.isEmpty()) {
+            System.out.println("No hay ahorros registrados para modificar.");
+            return;
+        }
+
+        // Mostrar lista de ahorros
+        System.out.println("Ahorros registrados");
+        for (int i = 0; i < ahorros.size(); i++) {
+            Ahorro a = ahorros.get(i);
+            System.out.printf("%d. %s - Categoría: %s - Monto: $%.2f\n", i+1, a.getDetalles(), a.getCategoria(), a.getMonto());
+        }
+
+        System.out.println("Seleccione el número del ahorro que desea modificar (0 para cancelar):");
+        int seleccion = Normalizar.normalizarInt(teclado) - 1;
+
+        if (seleccion == -1) {
+            System.out.println("Operación cancelada.");
+            return;
+        }
+
+        if (seleccion < 0 || seleccion >= ahorros.size()) {
+            System.out.println("Selección inválida.");
+            return;
+        }
+
+        Ahorro ahorroSeleccionado = ahorros.get(seleccion);
+
+        System.out.println("""
+                1. Agregar dinero al ahorro.
+                2. Retirar dinero del ahorro.
+                3. cancelar.
+                """);
+        int opcion = Normalizar.normalizarInt(teclado);
+
+        switch (opcion){
+            case 1 ->{
+                System.out.println("Ingrese la nueva cantidad a agregar: ");
+                double cambio = Normalizar.normalizarDouble(teclado);
+
+                // Modificar el ahorro
+                gestor.modificarAhorroAgregar(ahorroSeleccionado, cambio);
+            }
+            case 2 ->{
+                System.out.println("Ingrese la nueva cantidad a retirar:");
+                double cambio = Normalizar.normalizarDouble(teclado);
+
+                // Modificar el ahorro
+                gestor.modificarAhorroRetirar(ahorroSeleccionado, cambio);
+            }
+            case 3 -> System.out.println("Volviendo al menu");
+
+            default -> System.out.println("Opcion invalida, volviendo al menu");
+        }
+    }
+
+    private static void eliminarAhorro (GestorFinanzas gestor){
+        List<Ahorro> ahorros = gestor.getAhorros();
+
+        if (ahorros.isEmpty()) {
+            System.out.println("No hay ahorros registrados para eliminar.");
+            return;
+        }
+
+        // Mostrar lista de ahorros
+        System.out.println("Ahorros registrados");
+        for (int i = 0; i < ahorros.size(); i++) {
+            Ahorro a = ahorros.get(i);
+            System.out.printf("%d. %s - Categoría: %s - Monto: $%.2f\n", i+1, a.getDetalles(), a.getCategoria(), a.getMonto());
+        }
+
+        System.out.println("Seleccione el número del ahorro que desea eliminar (0 para cancelar):");
+        int seleccion = Normalizar.normalizarInt(teclado) - 1;
+
+        if (seleccion == -1) {
+            System.out.println("Operación cancelada.");
+            return;
+        }else if (seleccion < 0 || seleccion >= ahorros.size()) {
+            System.out.println("Selección inválida.");
+            return;
+        }
+
+        Ahorro ahorroSeleccionado = ahorros.get(seleccion);
+
+        // Eliminar el ahorro
+        gestor.eliminarAhorro(ahorroSeleccionado);
+        System.out.println("Ahorro eliminado exitosamente.");
+
+    }
+
 }

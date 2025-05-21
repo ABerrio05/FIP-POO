@@ -23,18 +23,18 @@ public class GestorFinanzas {
     // Generar reporte general
     public String generarReporteGeneral() {
         StringBuilder reporte = new StringBuilder();
-        reporte.append("=== REPORTE FINANZERO ===\n");
+        reporte.append("REPORTE FINANZERO: \n");
         reporte.append("Usuario: ").append(usuario.getNombre()).append(" ").append(usuario.getApellido()).append("\n");
         reporte.append("Balance total: $").append(calcularBalance()).append("\n\n");
 
         reporte.append("Ingresos:\n");
-        finanzas.stream().filter(f -> f.getTipo().equals("Ingreso")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Ingreso)f).getMonto()).append("\n"));
+        finanzas.stream().filter(f -> f.getTipo().equals("Ingreso")).forEach(f -> reporte.append("- ").append(f.getFechaHoraFormateada()).append(" | ").append(f.getDetalles()).append(": $").append(((Ingreso)f).getMonto()).append("\n"));
 
         reporte.append("\nGastos:\n");
-        finanzas.stream().filter(f -> f.getTipo().equals("Gasto")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Gasto)f).getMonto()).append("\n"));
+        finanzas.stream().filter(f -> f.getTipo().equals("Gasto")).forEach(f -> reporte.append("- ").append(f.getFechaHoraFormateada()).append(" | ").append(f.getDetalles()).append(": $").append(((Gasto)f).getMonto()).append("\n"));
 
         reporte.append("\nAhorros:\n");
-        finanzas.stream().filter(f -> f.getTipo().equals("Ahorro")).forEach(f -> reporte.append("- ").append(f.getDetalles()).append(": $").append(((Ahorro)f).getMonto()).append("\n"));
+        finanzas.stream().filter(f -> f.getTipo().equals("Ahorro")).forEach(f -> reporte.append("- ").append(f.getFechaHoraFormateada()).append(" | ").append(f.getDetalles()).append(": $").append(((Ahorro)f).getMonto()).append("\n"));
 
         return reporte.toString();
     }
@@ -61,7 +61,7 @@ public class GestorFinanzas {
         }
 
         StringBuilder reporte = new StringBuilder();
-        reporte.append("=== REPORTE DE CATEGORÍA: ").append(categoria).append(" ===\n");
+        reporte.append("REPORTE DE CATEGORÍA: ").append(categoria).append(" ===\n");
 
         filtradas.forEach(f -> {
             reporte.append(f.getTipo()).append(" - ").append(f.getDetalles()).append(": ");
@@ -78,12 +78,39 @@ public class GestorFinanzas {
         return reporte.toString();
     }
 
-    // Métodos adicionales
-    public List<Finanzas> getFinanzasPorTipo(String tipo) {
-        return finanzas.stream().filter(f -> f.getTipo().equalsIgnoreCase(tipo)).collect(Collectors.toList());
+    public void modificarAhorroAgregar(Ahorro ahorro, double cambio) {
+        double nuevoMonto = ahorro.getMonto() + cambio;
+        ahorro.setMonto(nuevoMonto);
+        System.out.println("Ahorro modificado exitosamente.");
     }
 
-    public double getTotalAhorros() {
-        return finanzas.stream().filter(f -> f.getTipo().equals("Ahorro")).mapToDouble(f -> ((Ahorro)f).getMonto()).sum();
+    public void modificarAhorroRetirar(Ahorro ahorro, double cambio){
+        if (cambio > ahorro.getMonto()) {
+            System.out.println("El monto del ahorro no puede ser negativo");
+        }else {
+            double nuevoMonto = ahorro.getMonto() - cambio;
+            ahorro.setMonto(nuevoMonto);
+            System.out.println("Ahorro modificado exitosamente.");
+        }
     }
+
+    public void eliminarAhorro(Ahorro ahorro) {
+        finanzas.remove(ahorro);
+    }
+
+    public List<Gasto> getGastos() {
+        return finanzas.stream().filter(f -> f.getTipo().equalsIgnoreCase("Gasto")).map(f -> (Gasto) f).collect(Collectors.toList());
+        // casteamos para devolver la clase específica Gasto
+    }
+
+    public List<Ingreso> getIngresos() {
+        return finanzas.stream().filter(f -> f.getTipo().equalsIgnoreCase("Ingreso")).map(f -> (Ingreso) f).collect(Collectors.toList());
+        // casteamos para devolver la clase específica Gasto
+    }
+
+    public List<Ahorro> getAhorros() {
+        return finanzas.stream().filter(f -> f.getTipo().equalsIgnoreCase("Ahorro")).map(f -> (Ahorro) f).collect(Collectors.toList());
+        // casteamos para devolver la clase específica Gasto
+    }
+
 }

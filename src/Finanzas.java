@@ -1,4 +1,5 @@
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 public abstract class Finanzas {
 
@@ -18,6 +19,9 @@ public abstract class Finanzas {
 
     public abstract String getTipo();
 
+    //Formatear la fecha para mostrarla de mejor manera
+    private static final DateTimeFormatter formatearFechaHora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+
     public String getDetalles() {
         return detalles;
     }
@@ -26,8 +30,8 @@ public abstract class Finanzas {
         this.detalles = detalles;
     }
 
-    public LocalDateTime getFechaHora() {
-        return fechaHora;
+    public String getFechaHoraFormateada() {
+        return fechaHora.format(formatearFechaHora);
     }
 
     public void setFechaHora(LocalDateTime fechaHora) {
