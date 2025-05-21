@@ -81,7 +81,7 @@ public class GestorFinanzas {
     public void modificarAhorroAgregar(Ahorro ahorro, double cambio) {
         double nuevoMonto = ahorro.getMonto() + cambio;
         ahorro.setMonto(nuevoMonto);
-        System.out.println("Ahorro modificado exitosamente.");
+        System.out.println("Ahorro fue modificado exitosamente.");
     }
 
     public void modificarAhorroRetirar(Ahorro ahorro, double cambio){

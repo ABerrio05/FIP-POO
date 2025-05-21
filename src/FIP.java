@@ -80,20 +80,20 @@ public class FIP {
 
         while (!volver) {
             System.out.print("""
-                *** MENÚ FINANZAS ***
-                1. Agregar ingreso
-                2. Agregar gasto
-                3. Agregar ahorro
-                4. Editar ahorro existente
-                5. Eliminar ahorro
-                6. Generar reporte general
-                7. Generar reporte por categoría
-                8. Ver balance actual
-                9. Generar grafica gastos por categoria
-                10. Generar grafica ingresos por categoria
-                11. Generar grafica ahorros por categoria
-                12. Volver
-                Seleccione una opcion:
+                *** LISTA DE OPCIONES FINANCIERAS ***
+                1. Agregar ingreso.
+                2. Agregar gasto.
+                3. Agregar ahorro.
+                4. Editar ahorro existente.
+                5. Eliminar ahorro.
+                6. Generar reporte general.
+                7. Generar reporte por cada categoría.
+                8. Conocer balance actual.
+                9. Generar grafica de gastos por categoria.
+                10. Generar grafica de ingresos por categoria.
+                11. Generar grafica ahorros por categoria.
+                12. Regresar.
+                Seleccione una opción:
                 """);
 
             int opcion = Normalizar.normalizarInt(teclado);
@@ -135,21 +135,21 @@ public class FIP {
                         GraficoAhorros grafica = new GraficoAhorros(ahorros);
                         grafica.setVisible(true);
                     } else {
-                        System.out.println("No hay ahorros registrados para mostrar en la gráfica.");
+                        System.out.println("No existe ahorros registrados para graficar.");
                     }
                 }
                 case 12 -> volver = true;
-                default -> System.out.println("Opción inválida.");
+                default -> System.out.println("Opción no valida.");
             }
         }
     }
 
     private static void agregarIngreso(GestorFinanzas gestor) {
-        System.out.println("Ingrese el monto de ingreso:");
+        System.out.println("Digite la cantidad de su ingreso:");
         double monto = Normalizar.normalizarDouble(teclado);
-        System.out.println("Ingrese detalles del ingreso:");
+        System.out.println("Digite el detalle del ingreso:");
         String detalles = teclado.nextLine();
-        System.out.println("Ingrese la categoría donde quiere ingresar el ingreso:");
+        System.out.println("Digite la categoría donde desea ubicar el ingreso:");
         String categoria = teclado.nextLine();
 
         Ingreso ingreso = new Ingreso(detalles, categoria, monto);
@@ -158,15 +158,15 @@ public class FIP {
     }
 
     private static void agregarGasto(GestorFinanzas gestor) {
-        System.out.println("Ingrese el monto del gasto:");
+        System.out.println("Digite la cantidad del gasto:");
         double monto = Normalizar.normalizarDouble(teclado);
         if (monto > gestor.calcularBalance()){
-            System.out.println("Error, fondos insuficientes, el saldo actual es de: " + gestor.calcularBalance());
+            System.out.println("Error, fondos insuficientes, su saldo actual es de: " + gestor.calcularBalance());
         }else {
 
-            System.out.println("Ingrese detalles del gasto:");
+            System.out.println("Digite el detalles del gasto:");
             String detalles = teclado.nextLine();
-            System.out.println("Ingrese la categoría donde quiere ingresar el gasto:");
+            System.out.println("Digite la categoría donde desea ubicar el gasto:");
             String categoria = teclado.nextLine();
 
             Gasto gasto = new Gasto(detalles,categoria,monto);
@@ -176,14 +176,14 @@ public class FIP {
     }
 
     private static void agregarAhorro(GestorFinanzas gestor) {
-        System.out.println("Ingrese el monto del ahorro:");
+        System.out.println("Digite la cantidad del ahorro:");
         double monto = Normalizar.normalizarDouble(teclado);
         if (monto > gestor.calcularBalance()){
-            System.out.println("Error, fondos insuficientes, el saldo actual es de: " + gestor.calcularBalance());
+            System.out.println("Error, fondos insuficientes, su saldo actual es de: " + gestor.calcularBalance());
         }else {
-            System.out.println("Ingrese detalles del ahorro:");
+            System.out.println("Digite el detalle del ahorro:");
             String detalles = teclado.nextLine();
-            System.out.println("Ingrese la categoría donde quiere ingresar el ahorro :");
+            System.out.println("Digite la categoría donde desea ubicar el ahorro :");
             String categoria = teclado.nextLine();
 
             Ahorro ahorro = new Ahorro(detalles, categoria, monto);
