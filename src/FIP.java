@@ -6,6 +6,7 @@ public class FIP {
     private static Map<Usuario, GestorFinanzas> gestoresFinanzas = new HashMap<>();
 
     public static void main(String[] args) {
+        gestorUsuario.cargarUsuariosDesdeArchivo();
         boolean salir = false;
         System.out.println("*** Bienvenido a FIP ***");
         while (!salir) {
@@ -36,6 +37,7 @@ public class FIP {
         if (gestorUsuario.iniciarSesion(usuario, contraseña)) {
             Usuario usuarioActual = gestorUsuario.getUsuarioActual();
             GestorFinanzas gestorFinanzas = gestoresFinanzas.computeIfAbsent(usuarioActual,k -> new GestorFinanzas(usuarioActual));
+            gestorFinanzas.cargarFinanzasDesdeArchivo();
             menuFinanzas(gestorFinanzas);
         } else {
             System.out.println("Usuario o contraseña incorrectos.");
@@ -68,7 +70,8 @@ public class FIP {
 
                 // Después de crear el usuario:
                 Usuario nuevoUsuario = new Usuario(nombre, apellido, edad, documento, contraseña, nombreUsuario, montoInicial);
-                if (gestorUsuario.agregarUsuario(nuevoUsuario)) {gestoresFinanzas.put(nuevoUsuario, new GestorFinanzas(nuevoUsuario));
+                if (gestorUsuario.agregarUsuario(nuevoUsuario)) {
+                    gestoresFinanzas.put(nuevoUsuario, new GestorFinanzas(nuevoUsuario));
                     System.out.println("Usuario registrado exitosamente.");
                 }
             }

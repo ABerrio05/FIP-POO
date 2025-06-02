@@ -1,0 +1,5 @@
+ABerrio,Ingreso,Me pagaron,Salario,50000.0
+ABerrio,Gasto,Pago plan celular,Servicios,36000.0
+ABerrio,Ahorro,Futuro viaje a medellin,Viajes,50000.0
+ABerrio,Gasto,Pago del agua,Servicios Publicos,37000.0
+ABerrio,Gasto,Salida a cine,Entretenimiento,15000.0
