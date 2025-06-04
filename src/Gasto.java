@@ -1,4 +1,3 @@
-
 public class Gasto extends Finanzas {
 
     private Double monto;

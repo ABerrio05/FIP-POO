@@ -1,0 +1,5 @@
+JoseA,Ingreso,me gane el chance,Apuestas,100000.0
+JoseA,Ingreso,me pagaron,Saldo,15000.0
+JoseA,Ingreso,Ganancias del negocio,Negocios,200000.0
+JoseA,Gasto,pago de recibos,Servicios publicos,120000.0
+JoseA,Ahorro,salir con amigos,Entretenimiento,50000.0

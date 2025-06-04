@@ -6,7 +6,6 @@ public class GestorFinanzas {
 
     private List<Finanzas> finanzas;
     private Usuario usuario;
-    private static final String ARCHIVO_FINANZAS = "Finanzas.txt";
 
     public GestorFinanzas(Usuario usuario) {
         this.finanzas = new ArrayList<>();
@@ -25,7 +24,7 @@ public class GestorFinanzas {
         finanzas.add(finanza);
         guardarFinanzasEnArchivo();
     }
-    // Generar reporte general
+
     public String generarReporteGeneral() {
         StringBuilder reporte = new StringBuilder();
         reporte.append("REPORTE FINANZERO: \n");
@@ -44,7 +43,6 @@ public class GestorFinanzas {
         return reporte.toString();
     }
 
-    // Calcular balance total
     public double calcularBalance() {
         double balance = usuario.getMontoInicial();
 
@@ -57,7 +55,6 @@ public class GestorFinanzas {
         return balance;
     }
 
-    // Reporte por categoría
     public String generarReportePorCategoria(String categoria) {
         List<Finanzas> filtradas = finanzas.stream().filter(f -> f.getCategoria().equalsIgnoreCase(categoria)).collect(Collectors.toList());
 
@@ -107,7 +104,7 @@ public class GestorFinanzas {
     }
 
     public void guardarFinanzasEnArchivo() {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(ARCHIVO_FINANZAS))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(getArchivoFinanzas()))) {
             for (Finanzas f : finanzas) {
                 writer.println(usuario.getNombreUsuario() + "," + f.getTipo() + "," + f.getDetalles() + "," + f.getCategoria() + "," + (f instanceof Ingreso ? ((Ingreso) f).getMonto() : f instanceof Gasto ? ((Gasto) f).getMonto() : ((Ahorro) f).getMonto()));
             }
@@ -117,7 +114,8 @@ public class GestorFinanzas {
     }
 
     public void cargarFinanzasDesdeArchivo() {
-        File archivo = new File(ARCHIVO_FINANZAS);
+        finanzas.clear();
+        File archivo = new File(getArchivoFinanzas());
         if (!archivo.exists()) return;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
@@ -157,6 +155,10 @@ public class GestorFinanzas {
     public List<Ahorro> getAhorros() {
         return finanzas.stream().filter(f -> f.getTipo().equalsIgnoreCase("Ahorro")).map(f -> (Ahorro) f).collect(Collectors.toList());
         // casteamos para devolver la clase específica Gasto
+    }
+
+    private String getArchivoFinanzas() {
+        return "Finanzas_" + usuario.getNombreUsuario() + ".txt";
     }
 
 }

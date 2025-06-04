@@ -13,7 +13,7 @@ public class GestorUsuario {
 
     public boolean agregarUsuario(Usuario nuevoUsuario) {
         if (existeUsuario(nuevoUsuario.getNombreUsuario())) {
-            return false; // Usuario ya existe
+            return false;
         }
         usuarios.add(nuevoUsuario);
         guardarUsuariosArchivo();
@@ -50,7 +50,7 @@ public class GestorUsuario {
                 return true;
             }
         }
-        return false; // Credenciales incorrectas
+        return false;
     }
 
     private boolean existeUsuario(String nombreUsuario) {

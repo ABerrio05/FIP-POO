@@ -1,1 +1,3 @@
 andres felipe,berrio vasquez,18,1013113031,Lunap2006,ABerrio,500000.0
+jose,cristancho,19,10122312543,Cr123,JoseA,10000.0
+andres,castro,19,42145534,CasLop,OAndres,10000.0

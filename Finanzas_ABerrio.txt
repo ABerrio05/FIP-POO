@@ -1,0 +1,7 @@
+ABerrio,Ingreso,me pagaron,Salario,50000.0
+ABerrio,Ingreso,me llego lo del arriendo,Negocios,100000.0
+ABerrio,Ingreso,me pagaron,Salario,30000.0
+ABerrio,Gasto,salida a cine,Entretenimiento,30000.0
+ABerrio,Ahorro,Comprar ropa,Ropa,60000.0
+ABerrio,Gasto,Compre mercado,Alimentacion,90000.0
+ABerrio,Ahorro,comprar un celular,Tecnologia,200000.0

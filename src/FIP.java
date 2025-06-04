@@ -68,7 +68,6 @@ public class FIP {
                 System.out.println("Ingrese un monto inicial");
                 Double montoInicial = Normalizar.normalizarDouble(teclado);
 
-                // Después de crear el usuario:
                 Usuario nuevoUsuario = new Usuario(nombre, apellido, edad, documento, contraseña, nombreUsuario, montoInicial);
                 if (gestorUsuario.agregarUsuario(nuevoUsuario)) {
                     gestoresFinanzas.put(nuevoUsuario, new GestorFinanzas(nuevoUsuario));
@@ -115,7 +114,7 @@ public class FIP {
                 }
                 case 8 -> System.out.println("Balance actual: " + gestor.calcularBalance());
                 case 9 -> {
-                    List<Gasto> gastos = gestor.getGastos(); // usa el método que tengas para obtener los gastos
+                    List<Gasto> gastos = gestor.getGastos();
                     if (!gastos.isEmpty()) {
                         GraficoGastos grafica = new GraficoGastos(gastos);
                         grafica.setVisible(true);
@@ -124,7 +123,7 @@ public class FIP {
                     }
                 }
                 case 10 -> {
-                    List<Ingreso> ingresos = gestor.getIngresos(); // usa el método que tengas para obtener los gastos
+                    List<Ingreso> ingresos = gestor.getIngresos();
                     if (!ingresos.isEmpty()) {
                         GraficoIngresos grafica = new GraficoIngresos(ingresos);
                         grafica.setVisible(true);
@@ -133,7 +132,7 @@ public class FIP {
                     }
                 }
                 case 11 -> {
-                    List<Ahorro> ahorros = gestor.getAhorros(); // usa el método que tengas para obtener los gastos
+                    List<Ahorro> ahorros = gestor.getAhorros();
                     if (!ahorros.isEmpty()) {
                         GraficoAhorros grafica = new GraficoAhorros(ahorros);
                         grafica.setVisible(true);
@@ -203,7 +202,6 @@ public class FIP {
             return;
         }
 
-        // Mostrar lista de ahorros
         System.out.println("Ahorros registrados");
         for (int i = 0; i < ahorros.size(); i++) {
             Ahorro a = ahorros.get(i);
@@ -237,14 +235,12 @@ public class FIP {
                 System.out.println("Ingrese la nueva cantidad a agregar: ");
                 double cambio = Normalizar.normalizarDouble(teclado);
 
-                // Modificar el ahorro
                 gestor.modificarAhorroAgregar(ahorroSeleccionado, cambio);
             }
             case 2 ->{
                 System.out.println("Ingrese la nueva cantidad a retirar:");
                 double cambio = Normalizar.normalizarDouble(teclado);
 
-                // Modificar el ahorro
                 gestor.modificarAhorroRetirar(ahorroSeleccionado, cambio);
             }
             case 3 -> System.out.println("Volviendo al menu");
@@ -261,7 +257,6 @@ public class FIP {
             return;
         }
 
-        // Mostrar lista de ahorros
         System.out.println("Ahorros registrados");
         for (int i = 0; i < ahorros.size(); i++) {
             Ahorro a = ahorros.get(i);
@@ -281,7 +276,6 @@ public class FIP {
 
         Ahorro ahorroSeleccionado = ahorros.get(seleccion);
 
-        // Eliminar el ahorro
         gestor.eliminarAhorro(ahorroSeleccionado);
         System.out.println("Ahorro eliminado exitosamente.");
 

@@ -29,17 +29,17 @@ public class GraficoAhorros extends JFrame {
 
         // Crear el gráfico
         JFreeChart chart = ChartFactory.createBarChart(
-                "Ahorros por Categoría", // Título
-                "Categoría",            // Eje X
-                "Monto",                // Eje Y
-                dataset                 // Datos
+                "Ahorros por Categoría",
+                "Categoría",
+                "Monto",
+                dataset
         );
 
         // Mostrar el gráfico en un panel
         ChartPanel chartPanel = new ChartPanel(chart);
         setContentPane(chartPanel);
         setSize(800, 600);
-        setLocationRelativeTo(null); // Centrar la ventana
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Solo cerrar esta ventana
+        setLocationRelativeTo(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
     }
 }
