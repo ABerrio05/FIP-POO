@@ -3,7 +3,7 @@ import java.util.*;
 public class Normalizar {
 
     public static Long normalizarLong (Scanner num){
-        while (true){
+        while (true){   
             String entrada = num.nextLine().trim();
             if (entrada.matches("-?\\d+")){
                 long numeroL = Long.parseLong(entrada);
@@ -21,7 +21,7 @@ public class Normalizar {
 
     }
 
-    public static int normalizarInt (Scanner num){
+    public static Integer normalizarInt (Scanner num){
         while (true){
             String entrada = num.nextLine().trim();
             if (entrada.matches("-?\\d+")){
